@@ -4,6 +4,7 @@ import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import axios from '../../axios-orders';
 const PRICES={
     meat:80,
     salad:30,
@@ -70,7 +71,24 @@ purchaseCancelHandler=()=>{
     this.setState({purchasing:false});
 }
 purchaseContinueHandler=()=>{
-    alert("यह खंड अभी तक नहीं बना है!!");
+
+    //alert("यह खंड अभी तक नहीं बना है!!");
+
+    const order={
+        ingredients:this.state.ingredients,
+        price:this.state.totalPrice,
+        customer:{
+            name:"Mohit",
+            address:{
+                state:"New Delhi",
+                pincode:"110081"
+
+            },
+            email:"m98716@gmail.com"
+        },
+        deliveryMethod:"cod"
+    }
+    axios.post('/orders.json',order);
 }
     render(){
         const disabledInfo={...this.state.ingredients};
