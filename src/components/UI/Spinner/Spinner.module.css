@@ -25,6 +25,7 @@
   top: 0;
   content: '';
 }
+
 .Loader:before {
   left: -1.5em;
   -webkit-animation-delay: -0.32s;
