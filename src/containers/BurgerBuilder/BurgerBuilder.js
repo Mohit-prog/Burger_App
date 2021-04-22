@@ -1,12 +1,15 @@
-import React, { Component } from "react";
-import Aux from "../../hoc/Auxi/Auxi";
-import Burger from "../../components/Burger/Burger";
-import BuildControls from "../../components/Burger/BuildControls/BuildControls";
-import Modal from "../../components/UI/Modal/Modal";
-import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
-import axios from "../../axios-orders";
-import Spinner from "../../components/UI/Spinner/Spinner";
-import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+
+import React, { Component } from 'react';
+
+import Aux from '../../hoc/Auxi/Auxi';
+import Burger from '../../components/Burger/Burger';
+import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import Spinner from '../../components/UI/Spinner/Spinner';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import axios from '../../axios-orders';
+
 const PRICES = {
   meat: 80,
   salad: 30,
@@ -86,43 +89,21 @@ class BurgerBuilder extends Component {
   purchaseCancelHandler = () => {
     this.setState({ purchasing: false });
   };
+
   purchaseContinueHandler = () => {
-   /*
-    this.setState({ loading: true });
+    
+    const queryParams = [];
+    for (let i in this.state.ingredients) {
+        queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]));
+    }
+    queryParams.push('price=' + this.state.totalPrice);
+    const queryString = queryParams.join('&');
+    this.props.history.push({
+        pathname: '/checkout',
+        search: '?' + queryString
+    });
+}
 
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: "Mohit",
-        address: {
-          state: "New Delhi",
-          pincode: "110081",
-        },
-        email: "m98716@gmail.com",
-      },
-      deliveryMethod: "cod",
-    };
-    axios
-      .post("/orders.json", order)
-      .then((res) => {
-        this.setState({ loading: false, purchasing: false });
-      })
-      .catch((err) => {
-        this.setState({ loading: false, purchasing: false });
-      });
-      */
-     let queryParams=[];
-     for(let i in this.state.ingredients)
-         queryParams
-         .push(encodeURIComponent(i)+"="+encodeURIComponent(this.state.ingredients[i]))
-
-         const queryString=queryParams.join('&');
-     this.props.history.push({
-         pathname:'/checkout',
-         search:'?'+queryString,
-     });
-  };
   render() {
     const disabledInfo = { ...this.state.ingredients };
 
@@ -179,3 +160,4 @@ class BurgerBuilder extends Component {
 }
 
 export default withErrorHandler(BurgerBuilder, axios);
+
