@@ -13,7 +13,7 @@ class Orders extends Component{
        .then(res=>{
 
        
-
+        
             const fetchedOrders=[];
 
            for(let key in res.data)
